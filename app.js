@@ -10,7 +10,6 @@ function UI() { }
 
 // Add Book to List prototype function to UI
 UI.prototype.addBookToList = function (book) {
-  console.log(book);
   const bookList = document.getElementById("book-list");
 
   // create new table row element
@@ -40,6 +39,11 @@ UI.prototype.addBookToList = function (book) {
 
   // append tr element to the bookList
   bookList.appendChild(tr);
+}
+
+// UI prototype method for deleting book from the list
+UI.prototype.deleteBookFromList = function (target) {
+  target.parentElement.parentElement.remove();
 }
 
 // Clear Fields
@@ -73,17 +77,15 @@ const submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", addBook);
 
 // Load Event Listener for Delete Book
-// const bookTable = document.getElementById("book-table");
-// bookTable.addEventListener("click", deleteBook);
+const bookList = document.getElementById("book-list");
+bookList.addEventListener("click", deleteBook);
 
+// addBook function
 function addBook(e) {
   // Get our UI input elements
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const isbn = document.getElementById("isbn").value;
-
-  // Instantiate new Book from those values
-  const book = new Book(title, author, isbn);
 
   // Instantiate a UI instance
   const ui = new UI();
@@ -93,6 +95,8 @@ function addBook(e) {
     ui.showAlert("Please fill in all fields", "error");
   }
   else {
+    // Instantiate new Book from those values
+    const book = new Book(title, author, isbn);
     // Add book to the list on the ui
     ui.addBookToList(book);
     // Show success alert
@@ -102,6 +106,22 @@ function addBook(e) {
   }
 
   // prevent default submit behaviour
+  e.preventDefault();
+}
+
+// deleteBook function
+function deleteBook(e) {
+  // Instantiate a UI instance
+  const ui = new UI();
+
+  if (e.target.classList.contains("delete")) {
+    // Delete the book from the list
+    ui.deleteBookFromList(e.target);
+    // Show delete alert
+    ui.showAlert("Book was deleted", "success");
+  }
+
+  // Prevent default behaviour
   e.preventDefault();
 }
 
