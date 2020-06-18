@@ -25,13 +25,13 @@
       </div>
       <div>
         <label for="title">Author</label>
-        <input class="u-full-width" type="text" id="title" name="title" placeholder="enter author...">
+        <input class="u-full-width" type="text" id="author" name="author" placeholder="enter author...">
       </div>
       <div>
         <label for="title">ISBN#</label>
-        <input class="u-full-width" type="text" id="title" name="title" placeholder="enter ISBN...">
+        <input class="u-full-width" type="text" id="isbn" name="isbn" placeholder="enter ISBN...">
       </div>
-      <input class="button-primary" id="add-book-btn" type="submit" value="Add Book">
+      <input class="button-primary" id="submit-btn" type="submit" value="Add Book">
     </form>
     <!-- START OF BOOK TABLE HERE -->
     <table class="u-full-width">
@@ -42,9 +42,9 @@
           <th>ISBN</th>
           <th>Date Added</th>
           <!-- Last one empty - where delete icons will be -->
-          <th></th>
+          <th>Remove?</th>
       </thead>
-      <tbody id="book-table">
+      <tbody id="book-list">
         <!-- BODY OF TABLE TO BE DYNAMICALLY INSERTED WITH JS-->
       </tbody>
     </table>
