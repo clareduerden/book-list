@@ -42,37 +42,64 @@ UI.prototype.addBookToList = function (book) {
   bookList.appendChild(tr);
 }
 
+// Clear Fields
 UI.prototype.clearFields = function () {
   document.getElementById("title").value = '';
   document.getElementById("author").value = '';
   document.getElementById("isbn").value = '';
 }
 
+// Show Error Alert in UI
+UI.prototype.showAlert = function (msg, classname) {
+  // Create a div and add class names
+  const div = document.createElement("div");
+  div.className = `alert ${classname}`;
+  // create a text node and append it
+  const text = document.createTextNode(msg);
+  div.appendChild(text);
+  // Insert into the DOM before the form
+  const container = document.querySelector(".container");
+  const form = document.getElementById("book-form");
+  container.insertBefore(div, form);
+
+  // Set div to timeout after 3 seconds
+  setTimeout(function () {
+    document.querySelector(".alert").remove();
+  }, 3000);
+}
+
 // Load Event Listener Add Book Btn
 const submitBtn = document.getElementById("submit-btn");
-submitBtn.addEventListener("click", makeBook);
+submitBtn.addEventListener("click", addBook);
 
 // Load Event Listener for Delete Book
 // const bookTable = document.getElementById("book-table");
 // bookTable.addEventListener("click", deleteBook);
 
-function makeBook(e) {
+function addBook(e) {
   // Get our UI input elements
-  const title = document.getElementById("title");
-  const author = document.getElementById("author");
-  const isbn = document.getElementById("isbn");
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const isbn = document.getElementById("isbn").value;
 
   // Instantiate new Book from those values
-  const book = new Book(title.value, author.value, isbn.value);
+  const book = new Book(title, author, isbn);
 
   // Instantiate a UI instance
   const ui = new UI();
 
-  // Add book to the list on the ui
-  ui.addBookToList(book);
-
-  // Clear the UI input fields
-  ui.clearFields();
+  // Validate the IU inputs - make sure they are not empty
+  if (title === '' || author === '' || isbn === '') {
+    ui.showAlert("Please fill in all fields", "error");
+  }
+  else {
+    // Add book to the list on the ui
+    ui.addBookToList(book);
+    // Show success alert
+    ui.showAlert("Success - Book Added", "success");
+    // Clear the UI input fields
+    ui.clearFields();
+  }
 
   // prevent default submit behaviour
   e.preventDefault();
