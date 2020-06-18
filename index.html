@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Skeleton CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY=" crossorigin="anonymous" />
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+
+  <title>Book List</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Book List</h1>
+    <!-- START OF BOOK-FORM -->
+    <form id="book-form">
+      <div>
+        <label for="title">Title</label>
+        <input class="u-full-width" type="text" id="title" name="title" placeholder="enter title...">
+      </div>
+      <div>
+        <label for="title">Author</label>
+        <input class="u-full-width" type="text" id="title" name="title" placeholder="enter author...">
+      </div>
+      <div>
+        <label for="title">ISBN#</label>
+        <input class="u-full-width" type="text" id="title" name="title" placeholder="enter ISBN...">
+      </div>
+      <input class="button-primary" id="add-book-btn" type="submit" value="Add Book">
+    </form>
+    <!-- START OF BOOK TABLE HERE -->
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Date Added</th>
+          <!-- Last one empty - where delete icons will be -->
+          <th></th>
+      </thead>
+      <tbody id="book-table">
+        <!-- BODY OF TABLE TO BE DYNAMICALLY INSERTED WITH JS-->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="app.js"></script>
+</body>
+
+</html>
