@@ -19,18 +19,6 @@ class UI {
     <td><a href="#" class="delete">X</a></td>
     `;
     bookList.appendChild(tr);
-
-    let books;
-    if (localStorage.getItem("books") === null) {
-      books = [];
-    }
-    else {
-      books = JSON.parse(localStorage.getItem("books"));
-    }
-
-    books.push(book);
-    localStorage.setItem("books", JSON.stringify(books));
-    console.log("Book added to Local Storage!");
   }
 
   deleteBookFromList(target) {
@@ -58,6 +46,43 @@ class UI {
   }
 }
 
+// BUILD CLASS OF STORAGE with static localStorage methods
+class Storage {
+
+  // Gets the books in localStorage
+  static getBooks() {
+    let books;
+    if (localStorage.getItem("books") === null) {
+      books = [];
+    }
+    else {
+      books = JSON.parse(localStorage.getItem("books"));
+    }
+    return books;
+  }
+
+  // Adds a Book to localStorage
+  static addBook(book) {
+    const books = Storage.getBooks();
+    books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
+    console.log("Book added to Local Storage!");
+  }
+
+  // Display the books in localStorage
+  static displayBooks() {
+    const books = Storage.getBooks();
+    books.forEach(function (book) {
+      const ui = new UI();
+      ui.addBookToList(book);
+    });
+  }
+
+  static removeBook(book) {
+    let books = Storage.getBooks();
+  }
+}
+
 
 // LOAD EVENT LISTENERS
 const submitBtn = document.getElementById("submit-btn");
@@ -65,6 +90,8 @@ submitBtn.addEventListener("click", addBook);
 
 const bookList = document.getElementById("book-list");
 bookList.addEventListener("click", deleteBook);
+
+document.addEventListener("DOMContentLoaded", Storage.displayBooks());
 
 
 // ADD BOOK FUNCTION
@@ -86,11 +113,10 @@ function addBook(e) {
   else {
     // Instantiate new Book from those values
     const book = new Book(title, author, isbn);
-    // Add book to the list on the ui
+    // Add book to the list
     ui.addBookToList(book);
-    // Show success alert
+    Storage.addBook(book);
     ui.showAlert("Success - Book Added", "success");
-    // Clear the UI input fields
     ui.clearFields();
   }
   // prevent default submit behaviour
@@ -103,9 +129,8 @@ function deleteBook(e) {
   const ui = new UI();
 
   if (e.target.classList.contains("delete")) {
-    // Delete the book from the list
     ui.deleteBookFromList(e.target);
-    // Show delete alert
+    Storage.deleteBook(book);
     ui.showAlert("Book was deleted", "success");
   }
   // Prevent default behaviour
